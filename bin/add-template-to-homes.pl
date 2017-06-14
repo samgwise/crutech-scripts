@@ -27,7 +27,7 @@ pod2usage(1) if $help;
 pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 # help for required args error:
-pod2usage(1) unless has_content($template_file) and has_content($out);
+pod2usage(1) unless Crutech::Utils::has_content($template_file) and Crutech::Utils::has_content($out);
 
 open(my $template_fh, "<", $template_file) or die "Unable to open '$template_file': $!";
 my $template = do {
@@ -46,12 +46,6 @@ foreach my $user (Crutech::Utils::ltsp_users) {
   die "Unable to chown '/home/$user/$out'!" if system "chown $user /home/$user/$out";
 }
 
-sub has_content {
-  my $string = shift;
-  return 0 unless defined $string;
-  return 0 unless length $string > 0;
-  1
-}
 __END__
 
 =head1 NAME

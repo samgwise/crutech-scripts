@@ -30,11 +30,11 @@ GetOptions(
 ) or pod2usage(2);
 
 # defaults
-$ignore_list_file_name = 'config/ignore-file-list.txt' unless has_content($ignore_list_file_name);
-$template_dir = 'templates/user-home-template' unless has_content($template_dir);
+$ignore_list_file_name = 'config/ignore-file-list.txt' unless Crutech::Utils::has_content($ignore_list_file_name);
+$template_dir = 'templates/user-home-template' unless Crutech::Utils::has_content($template_dir);
 
 # help for required args error:
-pod2usage(1) unless has_content($archive_dir);
+pod2usage(1) unless Crutech::Utils::has_content($archive_dir);
 
 #helps
 pod2usage(1) if $help;
@@ -45,7 +45,7 @@ $archive_dir = File::Spec->rel2abs( $archive_dir ) or die "Unable to resolve arc
 say '=' x 78;
 say "| Archive output dir: '$archive_dir'";
 
-my @ignore_file = has_content($ignore_list_file_name) ? split( "\n", slurp($ignore_list_file_name) ) : ();
+my @ignore_file = Crutech::Utils::has_content($ignore_list_file_name) ? split( "\n", Crutech::Utils::slurp($ignore_list_file_name) ) : ();
 say '=' x 78;
 say "| Ignored files:";
 say '-' x 78;
@@ -61,7 +61,7 @@ say '=' x 78;
 
 my %template;
 foreach my $file ( list_contents_recursive($template_dir) ) {
-  $template{normalise_path($file, $template_dir)} = sha256(slurp($file)) unless scalar grep { $_ eq normalise_path($file, $template_dir) } @ignore_file;
+  $template{normalise_path($file, $template_dir)} = sha256(Crutech::Utils::slurp($file)) unless scalar grep { $_ eq normalise_path($file, $template_dir) } @ignore_file;
 }
 
 foreach my $user ( Crutech::Utils::ltsp_users ) {
@@ -70,7 +70,7 @@ foreach my $user ( Crutech::Utils::ltsp_users ) {
   foreach my $file ( list_contents_recursive($path) ) {
     if (exists $template{normalise_path($file, $path)}) {
       # say "$file exists in template";
-      if (sha256(slurp($file)) ne $template{normalise_path($file, $path)}) {
+      if (sha256(Crutech::Utils::slurp($file)) ne $template{normalise_path($file, $path)}) {
         # say "$file content does not match template";
         push @user_files, $file;
       }
@@ -108,23 +108,9 @@ sub list_contents_recursive {
   @files
 }
 
-sub slurp {
-  my $file = shift(@_);
-  local $/;
-  open(my $fh, "<", $file) or die "Unable to open '$file': $!";
-  return <$fh>;
-}
-
 sub normalise_path {
   my ($path, $prefix) = (shift(@_), shift(@_));
   substr $path, length($prefix), length($path);
-}
-
-sub has_content {
-  my $string = shift;
-  return 0 unless defined $string;
-  return 0 unless length $string > 0;
-  1
 }
 
 __END__
