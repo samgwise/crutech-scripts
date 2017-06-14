@@ -29,6 +29,10 @@ GetOptions(
   "man"             => \$man,
 ) or pod2usage(2);
 
+#helps
+pod2usage(1) if $help;
+pod2usage(-exitval => 0, -verbose => 2) if $man;
+
 # defaults
 $ignore_list_file_name = 'config/ignore-file-list.txt' unless Crutech::Utils::has_content($ignore_list_file_name);
 $template_dir = 'templates/user-home-template' unless Crutech::Utils::has_content($template_dir);
@@ -36,9 +40,6 @@ $template_dir = 'templates/user-home-template' unless Crutech::Utils::has_conten
 # help for required args error:
 pod2usage(1) unless Crutech::Utils::has_content($archive_dir);
 
-#helps
-pod2usage(1) if $help;
-pod2usage(-exitval => 0, -verbose => 2) if $man;
 
 # Further process and report args
 $archive_dir = File::Spec->rel2abs( $archive_dir ) or die "Unable to resolve arch-dir '$archive_dir': $!";
