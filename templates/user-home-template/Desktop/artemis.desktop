@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_AU]=/crutech/icons/artemis.png
+Name[en_AU]=Artemis
+Exec=wine /crutech/Artemis/Artemis.exe
+Name=Artemis
+Icon=/crutech/icons/artemis.png
+Path=/crutech/Artemis

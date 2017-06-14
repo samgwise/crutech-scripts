@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_AU]=/home/<<user>>/gish/gish.bmp
+Name[en_AU]=Gish
+Path=/home/<<user>>/gish
+Exec=/home/<<user>>/gish/gish
+Name=Gish
+Icon=/home/<<user>>/gish/gish.bmp
