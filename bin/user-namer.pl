@@ -135,11 +135,14 @@ Print this man page and exit.
 
 =head1 DESCRIPTION
 
-B<This program> Sets up user home directories for new users.
-The template directory is found in projects templates/user-home-template directory.
-Templates can be added via calling the add-template-to-homes script.
-
-Currently this scipt adds items from the template and sets up groups for starcraft.
-Following this the template for gish is added to all user's desktops.
+B<This program> creates an adduser compatable file.
+Given a user list like
+  Nigel
+  Peter P
+  Peter M
+as the user-list argument.
+A user name and password, generated from the word list, will be created and formatted for each name.
+All user names will be lower case and the last initial is optional.
+User names must be unique although currently no checks are caried out by this generator.
 
 =cut
