@@ -1,6 +1,6 @@
 # Crütech Scripts #
 
-A scripting repo for Crütech!
+A repo of scripts for Crütech!
 
 ## Scripts ##
 Currently included scripts can be found in the `bin` directory of this project.
